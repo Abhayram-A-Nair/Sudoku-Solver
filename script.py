@@ -32,7 +32,7 @@ def Button_press(Entrylist):
 
 	print(output_string)
 
-	if(output_string[0] == '-1'):
+	if(output_string[0] == '-'):
 		return
 
 	for x in range(0,9):
