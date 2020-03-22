@@ -1,18 +1,13 @@
 # Sudoku-Solver
 Sudoku Solver which has a GUI
-
-# Requirements
-Requires python3.
-Extra Libraries required are : 
-  tkinter for python3
   
 # How to use
 
 Just run the command
 ```
-python3 script.py
+./SudokuSolver
 ```
-
+Or double click the executable file
 
 
 # Changes to make
