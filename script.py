@@ -1,7 +1,32 @@
 from tkinter import *
-from PIL import ImageTk,Image
 import subprocess
 import os
+
+
+
+root = Tk()
+root.title('Solver')
+
+Error_label = Label(text = "Invalid Values")
+Unsolvable_label = Label(text = "Given values are unsolvable for sudoku")
+needclearance = False
+
+# Unsolvable_label.grid_forget()
+
+def error():
+	Error_label.grid(row = 10, column = 1, columnspan= 7)
+
+def unsolvable():
+	Unsolvable_label.grid(row = 11, column = 1, columnspan = 9)
+
+def clear():
+	Error_label.grid_forget()
+	Unsolvable_label.grid_forget()
+
+	# Error_label = Label(text = "Invalid Values")
+	# Unsolvable_label = Label(text = "Given values are unsolvable for sudoku")
+	needclearance = False
+
 
 def solver(input_string):
 	# Parameters : ---> The sudoku in the form of an input string, each row separated by a newline, no spaces
@@ -19,16 +44,28 @@ def solver(input_string):
 
 def Button_press(Entrylist):
 	#convert to string
+	global needclearance
+
+	print(needclearance)
+
+	if(needclearance):
+		clear()
+
 	input_string = ""
 	for x in range(0,9):
 		for y in range(0,9):
 			val = Entrylist[x][y].get()
-			if(val==""):
+			if val=="":
 				val = "0"
-			if(len(val)>1):
-				return
-			if(not (val[0] >= "0" and val[0]<= "9")):
-				return
+			
+			if len(val)>1 :
+				error()
+				needclearance = True
+				
+			if not (val[0] >= "0" and val[0]<= "9"):
+				error()
+				needclearance = True
+				
 
 			input_string = input_string+val
 		input_string = input_string + '\n'
@@ -39,7 +76,9 @@ def Button_press(Entrylist):
 
 	print(output_string)
 
-	if(output_string[0] == '-'):
+	if output_string[0] == '-':
+		unsolvable()
+		needclearance = True
 		return
 
 	for x in range(0,9):
@@ -50,8 +89,6 @@ def Button_press(Entrylist):
 	return
 
 
-root = Tk()
-root.title('Solver')
 
 #List of lists
 Entrylist = []

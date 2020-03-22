@@ -23,6 +23,8 @@ bool in_box(int row, int col , int num){
 		otherwise
 			---> returns true
 	*/
+	if(num==0)
+		return true;
 
 	int row_start_box = 0;
 	int col_start_box = 0;
@@ -55,6 +57,8 @@ bool in_rowcol(int row , int col , int num){
 		otherwise
 			---> returns true
 	*/
+	if(num==0)
+		return true;
 
 	for(int i = 0;i<9;i++){
 		if(grid[row][i] == num)
@@ -84,6 +88,25 @@ pair<int,int> findzero(){
 	return {-1,-1};
 }
 
+bool solvable(){
+	for(int i = 0;i<9;i++){
+		for(int j =0; j <9;j++){
+			int temp = grid[i][j];
+			grid[i][j] = 0;
+			
+			if(!in_rowcol(i,j,temp))
+				return false;
+			if(!in_box(i,j,temp))
+				return false;
+
+			grid[i][j] = temp;
+		}
+	}
+
+	return true;
+}
+
+
 
 bool findans(){
 	/*
@@ -91,11 +114,14 @@ bool findans(){
 		If no solution exists, keeps grid array as is and returns false
 	*/
 
+
 	pair<int,int> coordinate = findzero();
 	pair<int,int> nozeros = {-1,-1};
-	if(coordinate == nozeros)
-		return true;
 	
+	if(coordinate == nozeros){
+		return true;
+	}
+
 	int row = coordinate.first;
 	int col = coordinate.second;
 	//bool found = false;
@@ -134,9 +160,16 @@ int main(){
 	}
 	
 	//fills the zeros in grid[][] and returns false if answer not found
+	
+	if(!solvable()){
+		//No possible solution exists
+		cout<<-1<<endl;
+		return 0;
+	}
+
 	bool answer_found = findans();
 
-	if(!answer_found){
+	if(!answer_found || !solvable()){
 		//No possible solution exists
 		cout<<-1<<endl;
 		return 0;
