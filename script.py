@@ -23,6 +23,13 @@ def Button_press(Entrylist):
 	for x in range(0,9):
 		for y in range(0,9):
 			val = Entrylist[x][y].get()
+			if(val==""):
+				val = "0"
+			if(len(val)>1):
+				return
+			if(not (val[0] >= "0" and val[0]<= "9")):
+				return
+
 			input_string = input_string+val
 		input_string = input_string + '\n'
 	
